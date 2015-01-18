@@ -1,0 +1,16 @@
+{
+  "name": "weekly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "linxixuan",
+  "license": "MIT",
+  "dependencies": {
+    "co-views": "^0.2.0",
+    "ejs": "^2.1.4",
+    "koa": "^0.14.0",
+    "koa-body-parser": "^1.1.0",
+    "koa-static": "^1.4.8",
+    "mongoose": "^3.8.21"
+  }
+}

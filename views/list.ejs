@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="js/build/react.js"></script>
+    <script src="js/build/JSXTransformer.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/Showdown.js"></script>
+</head>
+<body>
+    <div id="weekly-wrapper"></div>
+    <script type="text/jsx">
+        var Editor = React.createClass({
+            getInitialState: function() {
+                return {content: ''};
+            },
+            handleChange: function (e) {
+                this.props.userInput(e);
+            },
+            render: function () {
+                return (
+                        <textarea onChange={this.handleChange}>
+                        </textarea>
+                );
+            }
+        });
+
+        var Viewer = React.createClass({
+            render: function () {
+                var content = this.props.content;
+                return (
+                    <div className="viewer">
+                        <div
+                            className="content"
+                            dangerouslySetInnerHTML={{
+                                __html: content
+                            }}
+                        />
+                    </div>
+                );
+            }
+        });
+
+        var Weekly = React.createClass({
+            getInitialState: function () {
+                return {raw: '', res: ''};
+            },
+            handleClick: function () {
+                var data = this.state.raw;
+                $.ajax({
+                    type: "POST",
+                    url: '/wk',
+                    data: data,
+                    success: function () {
+                        console.log(123);
+                    },
+                });
+            },
+            userInput: function (e) {
+                var converter = new Showdown.converter();
+
+                raw = e.target.value;
+                res = converter.makeHtml(raw);
+
+                this.setState({raw: raw, res: res});
+            },
+            render: function () {
+                return (
+                    <div className="weekly">
+                        <Editor userInput={this.userInput}/>
+                        <Viewer content={this.state.res}/>
+                        <div class="ops">
+                            <input type="button" value="submit" onClick={this.handleClick} />
+                        </div>
+                    </div>
+                );
+            }
+        });
+
+        React.render(<Weekly />, document.getElementById('weekly-wrapper'));
+    </script>
+</body>
+</html>
