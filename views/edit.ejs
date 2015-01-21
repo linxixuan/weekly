@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/edit.css" />
+    <script src="js/build/react.js"></script>
+    <script src="js/build/JSXTransformer.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/Showdown.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</head>
+<body>
+    <div id="weekly-wrapper"></div>
+    <script type="text/jsx">
+        var Editor = React.createClass({
+            getInitialState: function() {
+                return {content: ''};
+            },
+            handleChange: function (e) {
+                this.props.userInput(e);
+            },
+            render: function () {
+                return (
+                    <textarea className="block block--editor" onChange={this.handleChange}>
+                    </textarea>
+                );
+            }
+        });
+
+        var Viewer = React.createClass({
+            render: function () {
+                var content = this.props.content;
+                return (
+                    <div className="block block--viewer">
+                        <div
+                            className="content"
+                            dangerouslySetInnerHTML={{
+                                __html: content
+                            }}
+                        />
+                    </div>
+                );
+            }
+        });
+
+        var Weekly = React.createClass({
+            getInitialState: function () {
+                return {raw: '', res: ''};
+            },
+            handleClick: function () {
+                var data = {content: this.state.raw};
+                if (this.state.raw === '') {
+                    toastr.error('empty content');
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '/wk',
+                    data: data,
+                    success: function () {
+                        toastr.success('upload success!');
+                    },
+                });
+            },
+            userInput: function (e) {
+                var converter = new Showdown.converter();
+
+                raw = e.target.value;
+                res = converter.makeHtml(raw);
+
+                this.setState({raw: raw, res: res});
+            },
+            render: function () {
+                return (
+                    <div className="weekly">
+                        <Editor userInput={this.userInput}/>
+                        <Viewer content={this.state.res}/>
+                        <div className="ops">
+                            <input type="button" className="submit" value="submit" onClick={this.handleClick} />
+                        </div>
+                    </div>
+                );
+            }
+        });
+
+        React.render(<Weekly />, document.getElementById('weekly-wrapper'));
+    </script>
+</body>
+</html>
