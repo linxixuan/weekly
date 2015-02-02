@@ -48,7 +48,11 @@ app.use(function *(){
         if(/^\/edit/.test(this.url)) {
             this.body = yield render('edit');
         } else if (/^\/list/.test(this.url)) {
-            this.body = yield render('list');
+            if (this.request.header['x-requested-with'] === 'XMLHttpRequest') {
+                this.body = yield Weekly.find({}).exec();
+            } else {
+                this.body = yield render('list');
+            }
         } else {
             this.body = '哈哈哈，你找啥呢？';
         }

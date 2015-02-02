@@ -11,7 +11,45 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body>
-    <script>
+    <script type="text/jsx">
+    var List = React.createClass({
+        getInitialState: function() {
+            return {list: []};
+        },
+        componentWillMount: function () {
+            var instance = this;
+            // 获取列表
+            $.ajax('/list').done(function (res) {
+                var list;
+                if (typeof res === 'object') {
+                    list = res;
+                } else {
+                    list = $.parseJSON(res);
+                }
+                console.log(list);
+                instance.setState({list: list});
+            });
+        },
+        render: function () {
+            function createItem(item) {
+                var timeIndex = item.date.indexOf("T");
+                return (
+                    <div className="report">
+                        <h2>{item.date.slice(0, timeIndex)}</h2>
+                        <div className="content">{item.content}</div>
+                    </div>
+                );
+            }
+
+            return(
+                <p>
+                    {this.state.list.map(createItem)}
+                </p>
+            );
+        }
+    });
+
+    React.render(<List />, document.body);
     </script>
 </body>
 </html>
