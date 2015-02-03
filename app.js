@@ -49,6 +49,7 @@ app.use(function *(){
             this.body = yield render('edit');
         } else if (/^\/list/.test(this.url)) {
             if (this.request.header['x-requested-with'] === 'XMLHttpRequest') {
+                // 这里yield的变量必需是co能够转化的对象
                 this.body = yield Weekly.find({}).exec();
             } else {
                 this.body = yield render('list');

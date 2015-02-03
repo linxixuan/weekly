@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/edit.css" />
+    <link rel="stylesheet" type="text/css" href="css/list.css" />
     <script src="js/build/react.js"></script>
     <script src="js/build/JSXTransformer.js"></script>
     <script src="js/jquery-1.11.1.min.js"></script>
@@ -11,6 +11,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body>
+    <div id="J-wrapper" class="wrapper">
+    </div>
     <script type="text/jsx">
     var List = React.createClass({
         getInitialState: function() {
@@ -49,7 +51,7 @@
         }
     });
 
-    React.render(<List />, document.body);
+    React.render(<List />, document.getElementById('J-wrapper'));
     </script>
 </body>
 </html>
