@@ -28,17 +28,23 @@
                 } else {
                     list = $.parseJSON(res);
                 }
-                console.log(list);
                 instance.setState({list: list});
             });
         },
         render: function () {
             function createItem(item) {
-                var timeIndex = item.date.indexOf("T");
+                var timeIndex = item.date.indexOf("T"),
+                    converter = new Showdown.converter(),
+                    content = converter.makeHtml(item.content);
+
                 return (
                     <div className="report">
                         <h2>{item.date.slice(0, timeIndex)}</h2>
-                        <div className="content">{item.content}</div>
+                        <div className="content"
+                            dangerouslySetInnerHTML={{
+                                __html: content
+                            }}
+                        />
                     </div>
                 );
             }
