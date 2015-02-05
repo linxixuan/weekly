@@ -1,5 +1,4 @@
 html {
-    background:#1abc9c;
     font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,STHeiti,sans-serif;
 }
 
@@ -111,6 +110,10 @@ li {
 }
 .wrapper {
     margin:0 auto;
+    padding:20px;
     width:980px;
     background:#f7f7f9;
+}
+.report {
+    margin-bottom:50px;
 }

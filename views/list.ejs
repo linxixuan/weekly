@@ -19,9 +19,24 @@
             return {list: []};
         },
         componentWillMount: function () {
-            var instance = this;
+            var instance = this,
+                start = location.search.split('=')[1].split('-')[0],
+                end = location.search.split('=')[1].split('-')[1],
+                data = {};
+
+            if (start && end) {
+                data = {
+                    start: start,
+                    end: end
+                };
+            }
+            console.log(data);
             // 获取列表
-            $.ajax('/list').done(function (res) {
+            $.ajax({
+                url: '/list',
+                method: 'GET',
+                data: data
+            }).done(function (res) {
                 var list;
                 if (typeof res === 'object') {
                     list = res;
