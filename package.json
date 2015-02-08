@@ -1,7 +1,7 @@
 {
   "name": "weekly",
   "version": "1.0.0",
-  "description": "",
+  "description": "* framework: koa * javascript lib: jQuery * template engine: ejs * data binding: react * database: mongodb * databse middleware: mongoose * other: markdown",
   "main": "index.js",
   "author": "linxixuan",
   "license": "MIT",
@@ -12,5 +12,24 @@
     "koa-bodyparser": "^1.3.0",
     "koa-static": "^1.4.8",
     "mongoose": "^3.8.22"
-  }
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-stylus": "^2.0.0",
+    "gulp-watch": "^4.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/linxixuan/weekly.git"
+  },
+  "keywords": [
+    "markdown",
+    "weekly-report",
+    "koa",
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/linxixuan/weekly/issues"
+  },
+  "homepage": "https://github.com/linxixuan/weekly"
 }
