@@ -1,2 +1,7 @@
 ## a web app to write weekly
-## use reactjs and koa
+* framework: koa
+* javascript lib: jQuery
+* template engine: ejs
+* data binding: react
+* database: mongodb
+* databse middleware: mongoose

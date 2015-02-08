@@ -20,9 +20,14 @@
         },
         componentWillMount: function () {
             var instance = this,
-                start = location.search.split('=')[1].split('-')[0],
-                end = location.search.split('=')[1].split('-')[1],
+                start,
+                end,
                 data = {};
+
+            if (location.search) {
+                start = location.search.split('=')[1].split('-')[0];
+                end = location.search.split('=')[1].split('-')[1];
+            }
 
             if (start && end) {
                 data = {
@@ -30,7 +35,6 @@
                     end: end
                 };
             }
-            console.log(data);
             // 获取列表
             $.ajax({
                 url: '/list',

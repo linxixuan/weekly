@@ -49,15 +49,21 @@ app.use(function *(){
             this.body = yield render('edit');
         } else if (/^\/list/.test(this.url)) {
             if (this.request.header['x-requested-with'] === 'XMLHttpRequest') {
-                var arr = this.request.querystring.split('&'),
-                    start = new Date(unescape(arr[0].split('=')[1])),
+                var arr,
+                    start,
+                    end;
+
+                if (this.request.querystring) {
+                    arr = this.request.querystring.split('&');
+                    start = new Date(unescape(arr[0].split('=')[1]));
                     end = new Date(unescape(arr[1].split('=')[1]));
+                }
                 var config = {};
                 if (start && end) {
                     config = {date: {$lt: end, $gte: start}};
                 }
                 // 这里yield的变量必需是co能够转化的对象
-                this.body = yield Weekly.find(config).exec();
+                this.body = yield Weekly.find().exec();
             } else {
                 this.body = yield render('list');
             }
